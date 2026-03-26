@@ -14,7 +14,7 @@ initial_fuel_height=4.5
 time = (0, 150)
 
 def f(t, y):
-    dydt = -A_outlet*np.sqrt(np.abs(y[0]))*np.sqrt(2*g)/A_tank
+    dydt = -A_outlet*np.sqrt(np.abs(y[0]))*sqrt(2*g)/A_tank
     return dydt
 
 solution = scipy.integrate.solve_ivp(f, time, [initial_fuel_height], t_eval=np.linspace(0, 150, 100))
