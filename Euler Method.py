@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib . pyplot as plt
-
+from matplotlib.pyplot import savefig
 
 g = 9.81
 A_tank = 8
@@ -8,8 +8,6 @@ A_outlet = 0.04
 initial_fuel_height = 4.5
 tf = 150
 time_step = 0.1
-
-iterations = int(np.floor(tf/time_step))
 
 def euler_method (f, y0 , t):
 
@@ -30,12 +28,17 @@ def euler_method (f, y0 , t):
 def my_ode (t, y):
     return -A_outlet * np.sqrt (np.abs (y)) * np.sqrt (2 * g) / A_tank
 
-t = np. linspace (0, tf, iterations)
-y = euler_method (my_ode , initial_fuel_height , t)
-
-plt . plot (t, y, 'o-',marker=',', mec='red' ,mfc ='red',label=str(time_step))
+for time_step in (2,0.5,0.1):
+    iterations = int(np.floor(tf / time_step))
+    t = np.linspace(0, tf, iterations)
+    y = euler_method(my_ode, initial_fuel_height, t)
+    plt.plot(t, y, 'o-', markersize=30/iterations, mec='green', mfc='green', label=time_step)
+    plt.xlabel('time(s)')
+    plt.ylabel('Height of fuel (m)')
+    plt.title('Euler Method Solution:')
+    savefig('Euler_Method_Solution_'+str(time_step)+'.png')
 plt . xlabel ('time(s)')
 plt . ylabel ('Height of fuel (m)')
-plt . title ('Euler Method Solution: Time Step = '+str(time_step)+'s')
+plt . title ('Euler Method Solution:')
 plt . grid ( True )
 plt . show ()
